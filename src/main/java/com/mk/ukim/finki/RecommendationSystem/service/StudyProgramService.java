@@ -1,6 +1,6 @@
 package com.mk.ukim.finki.RecommendationSystem.service;
 
-import com.mk.ukim.finki.RecommendationSystem.entity.StudyProgram;
+import com.mk.ukim.finki.RecommendationSystem.model.StudyProgram;
 
 import java.util.List;
 
