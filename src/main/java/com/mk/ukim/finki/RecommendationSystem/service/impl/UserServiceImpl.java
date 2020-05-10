@@ -51,15 +51,16 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
     @Override
-    public User createUser(String firstName, String lastName, String yearStudies, String email, int roleId, String password, int studyProgramId) {
+    public User createUser(String firstName, String lastName, String yearStudies, String email,String password, int studyProgramId) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setYearStudies(yearStudies);
         user.setEmail(email);
-        Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RoleIdNotFoundException(roleId));
-        user.setRole(role);
+//        Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RoleIdNotFoundException(roleId));
+//        user.setRole(role);
         user.setPassword(password);
         StudyProgram studyProgram = this.studyProgramRepository.findById(studyProgramId).orElseThrow(() -> new StudyProgramNotFoundException(studyProgramId));
         user.setStudyProgram(studyProgram);
@@ -77,19 +78,25 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.save(user);
     }
 
+
     @Override
-    public User editUser(int id, String firstName, String lastName, String yearStudies, String email, int roleId, String password, int studyProgramId) {
+    public User editUser(int id, String firstName, String lastName, String yearStudies, String email, String password, int studyProgramId) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setYearStudies(yearStudies);
         user.setEmail(email);
-        Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RoleIdNotFoundException(roleId));
-        user.setRole(role);
+//        Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RoleIdNotFoundException(roleId));
+//        user.setRole(role);
         user.setPassword(password);
         StudyProgram studyProgram = this.studyProgramRepository.findById(studyProgramId).orElseThrow(() -> new StudyProgramNotFoundException(studyProgramId));
         user.setStudyProgram(studyProgram);
         return userRepository.save(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return this.userRepository.findByUsername(username).orElse(null);
     }
 
     @Override
@@ -99,8 +106,6 @@ public class UserServiceImpl implements UserService {
         user.setLastName(user.getLastName());
         user.setYearStudies(user.getYearStudies());
         user.setEmail(user.getEmail());
-        Role role = this.roleRepository.findById(user.getRole().getId()).orElseThrow(() -> new RoleIdNotFoundException(user.getRole().getId()));
-        user.setRole(role);
         user.setPassword(user.getPassword());
         StudyProgram studyProgram = this.studyProgramRepository.findById(user.getStudyProgram().getId()).orElseThrow(() -> new StudyProgramNotFoundException(user.getStudyProgram().getId()));
         user.setStudyProgram(studyProgram);

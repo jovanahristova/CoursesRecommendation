@@ -18,12 +18,13 @@ public interface UserService {
 
    // Page<User> searchUser(String email,int page,int size);
 
-    User createUser(String firstName, String lastName, String yearStudies, String email, int roleId, String password, int studyProgramId);
+    User createUser(String firstName, String lastName, String yearStudies, String email, String password, int studyProgramId);
 
     User create(User user);
 
-    User editUser(int id, String firstName, String lastName, String yearStudies, String email, int roleId, String password, int studyProgramId);
+    User editUser(int id, String firstName, String lastName, String yearStudies, String email, String password, int studyProgramId);
 
+    User findByUsername(String username);
     User edit(int id, User user);
     void deleteUserById(int id);
 }

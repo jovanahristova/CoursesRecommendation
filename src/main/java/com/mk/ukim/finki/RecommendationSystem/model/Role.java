@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "role")
 public class Role {
@@ -19,7 +17,14 @@ public class Role {
     private int Id;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private ERole name;
+
+    public Role(){}
+
+    public Role(ERole name){
+        this.name = name;
+    }
 
     public int getId() {
         return Id;
@@ -29,11 +34,11 @@ public class Role {
         Id = id;
     }
 
-    public String getRole() {
-        return role;
+    public ERole getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(ERole name) {
+        this.name = name;
     }
 }

@@ -6,6 +6,7 @@ import com.mk.ukim.finki.RecommendationSystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,6 +70,13 @@ public class UserController {
         return userService.findAll();
     }*/
 
+    @GetMapping
+    public String getStudentsPage(Model model){
+        List<User> users = this.userService.findAll();
+        model.addAttribute("users", users);
+        return "students";
+    }
+
   
 
 
@@ -77,11 +85,10 @@ public class UserController {
                            @RequestParam(value = "lastName", required = false) String lastName,
                            @RequestParam(value = "yearStudies", required = false) String yearStudies,
                            @RequestParam(value = "email", required = false) String email,
-                           @RequestParam(value = "roleId", required = false) int roleId,
                            @RequestParam(value = "password", required = false) String password,
                            @RequestParam(value = "studyProgramId", required = false) int studyProgramId) {
         //String firstName, String lastName, String yearStudies, String email, int roleId, String password, int studyProgramId
-        User user = userService.createUser(firstName, lastName, yearStudies, email, roleId, password, studyProgramId);
+        User user = userService.createUser(firstName, lastName, yearStudies, email, password, studyProgramId);
         return user;
     }
 
@@ -91,11 +98,10 @@ public class UserController {
                            @RequestParam(value = "lastName", required = false) String lastName,
                            @RequestParam(value = "yearStudies", required = false) String yearStudies,
                            @RequestParam(value = "email", required = false) String email,
-                           @RequestParam(value = "roleId", required = false) int roleId,
                            @RequestParam(value = "password", required = false) String password,
                            @RequestParam(value = "studyProgramId", required = false) int studyProgramId) {
 
-        User user = userService.editUser(userId, firstName, lastName, yearStudies, email, roleId, password, studyProgramId);
+        User user = userService.editUser(userId, firstName, lastName, yearStudies, email, password, studyProgramId);
         return user;
     }
 

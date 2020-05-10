@@ -61,37 +61,58 @@
             <h1 class="w3-text-teal">Register as a new Student</h1>
 
             <div class="w3-row-padding">
-                <!-- action="/register/processRegistrationForm"
-                                         th:action="@{/register/processRegistrationForm}"
-                                         method="post"-->
 
                 <div class="w3-half">
-                    <form class="w3-container w3-card-4" action="/showMyLoginPage"
-                          method="POST">
-<!--                        <input type="text" hidden="hidden" name="id" th:value="${user.getId()}">-->
+                    <form class="w3-container w3-card-4" action="/register/processRegistrationForm"
+                          th:action="@{/register/processRegistrationForm}"
+                          method="post"
+                          th:object="${user}">
+                        <input type="text" hidden="hidden" name="id" th:value="${user.getId()}">
                         <div class="w3-section w3-form-group">
                             <input class="w3-input w3-form-control" required type="text"
-                                   id="username"
-                                   name="username">
-                            <label for="username"> Username</label>
+                                   th:value="${user.getFirstName()}"
+                                   id="firstName"
+                                   name="firstName"
+                                   th:field="*{firstName}"
+                            >
+                            <label for="firstName">First Name</label>
                         </div>
-
-
+                        <div class="w3-section w3-form-group">
+                            <input class="w3-input w3-form-control" required type="text"
+                                   th:value="${user.getLastName()}"
+                                   id="lastName"
+                                   name="lastName"
+                                   th:field="*{lastName}">
+                            <label for="lastName">Last Name</label>
+                        </div>
+                        <div class="w3-section w3-form-group">
+                            <input class="w3-input w3-form-control" required type="text"
+                                   th:value="${user.getUsername()}"
+                                   id="username"
+                                   name="username"
+                                   th:field="*{username}">
+                            <label for="username">Username</label>
+                        </div>
                         <div class="w3-section w3-form-group">
                             <input class="w3-input w3-form-control" required type="password"
+                                   th:value="${user.getPassword()}"
                                    id="password"
-                                   name="password">
+                                   name="password"
+                                   th:field="*{password}">
                             <label for="password">Password</label>
                         </div>
 
-
+                        <div class="w3-section w3-form-group">
+                            <input class="w3-input w3-form-control" required type="email"
+                                   th:value="${user.getEmail()}"
+                                   id="email"
+                                   name="email"
+                                   th:field="*{email}">
+                            <label for="email">E-mail</label>
+                        </div>
                         <div class="w3-left" style="padding: 30px">
                             <button type="submit" class="w3-button w3-theme" style="margin: 20px">Submit</button>
                             <a type="button" class="w3-button w3-theme" href="/home">Back to Courses</a>
-
-                            <input type="hidden"
-                                   name="${_csrf.parameterName}"
-                                   value="${_csrf.token}" />
 
                             <br>
                         </div>
