@@ -14,12 +14,17 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap.min.css">
 <script src="/static/vendor/jquery/jquery.min.js"></script>
 <script src="/static/vendor/jquery-migrate/jquery-migrate.min.js"></script>
 <script src="/static/vendor/popper.min.js"></script>
 <script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
@@ -66,31 +71,65 @@
 
     <div class="w3-row w3-padding-64" style="margin-left:250px">
         <div class="w3-twothird w3-container">
-            <h1 class="w3-text-teal">Adding new Study program</h1>
+            <h1 class="w3-text-teal">Adding new Rating from <span th:text="${username}"></span> to Course</h1>
 
             <div class="w3-row-padding">
 
                 <div class="w3-half">
-                    <form class="w3-container w3-card-4" action="/studyprograms"
+                    <form class="w3-container w3-card-4" action="/ratingsUC/fromStudentToCourse"
+                          th:action="@{/ratingsUC/fromStudentToCourse}"
                           method="post"
-                          th:action="@{/studyprograms}"
-                          th:object="${studyProgram}">
-                        <input type="text" hidden="hidden" name="id" th:value="${studyProgram.getId()}">
-                        <h2>New study program:</h2>
-                        <div class="w3-section">
-                            <input class="w3-input" required type="text"
-                                   th:value="${studyProgram.getCode()}"
-                                   id="code"
-                                   name="code"
-                                   th:field="*{code}"
-                            >
-                            <label for="code">Code</label>
+                          th:object="${ratingUC}">
+                        <input type="text" hidden="hidden" name="id" th:value="${ratingUC.getId()}">
+                        <h2>New rating:</h2>
+                      <!--  <div class="w3-section w3-form-group">
+                            &lt;!&ndash;<input class="w3-input w3-form-control" required type="text"
+                                   th:value="${username}"
+                                   id="username"
+                                   name="username"
+                                   th:field="*{username}">&ndash;&gt;
+                            <span th:text="${username}"></span>
+                            <label>User:</label>
+                        </div>-->
+
+                        <div class="w3-form-group">
+                            <label class="w3-label">Courses:</label>
+
+                            <select class="w3-select w3-form-control form-control" th:field="*{course}"
+                                    name="option">
+                                <option
+                                        th:selected="${courses.size() != 0 }"
+                                        th:each="course : ${courses}"
+                                        th:value="${course.getId()}"
+                                        th:text="${course.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="w3-section w3-form-group">
+                            <input class="w3-input w3-form-control" required type="text"
+                                   th:value="${ratingUC.getRating()}"
+                                   id="rating"
+                                   name="rating"
+                                   th:field="*{rating}">
+                            <label for="rating">Rating</label>
+                        </div>
+                        <div class="w3-section w3-form-group">
+                            <input class="w3-input w3-form-control" required type="text"
+                                   th:value="${ratingUC.getComment()}"
+                                   id="comment"
+                                   name="comment"
+                                   th:field="*{comment}">
+                            <label for="comment">Comment</label>
                         </div>
 
 
+                       <!-- -->
+
+
+
                         <div class="w3-left" style="padding: 30px">
-                            <button type="submit" class="w3-button w3-theme" style="margin: 10px">Submit</button>
-                            <a type="button" class="w3-button w3-theme" href="/studyprograms">Back to Study programs</a>
+                            <button type="submit" class="w3-button w3-theme" style="margin: 20px">Submit</button>
+                            <a type="button" class="w3-button w3-theme" href="/courses">Back to Courses</a>
 
                             <br>
                         </div>
@@ -105,8 +144,8 @@
     </div>
 
 
-    <footer id="myFooter" class="fixed-bottom">
-        <div class="w3-container w3-theme-l2 fixed-bottom"  style="width: 100%">
+    <footer id="myFooter">
+        <div class="w3-container w3-theme-l2" style="width: 100%">
             <h6>Jovana Hristova</h6>
         </div>
 

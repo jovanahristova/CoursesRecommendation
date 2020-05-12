@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @AllArgsConstructor
@@ -107,5 +108,18 @@ public class Course {
     @Override
     public String toString() {
         return "";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Id == course.Id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id);
     }
 }

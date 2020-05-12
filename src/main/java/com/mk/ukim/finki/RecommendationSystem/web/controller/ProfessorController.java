@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,7 +31,24 @@ public class ProfessorController {
     public String getProfessorPage(Model model){
         List<Professor> professors = this.professorService.findAll();
         model.addAttribute("professors", professors);
-        return "professors";
+        return "redirect:/professors/all";
+    }
+
+    @GetMapping("/all")
+    public String getProfessorsPage(HttpServletRequest request, Model model){
+
+        int page = 0; //default page number is 0 (yes it is weird)
+        int size = 10; //default page size is 10
+
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }
+        model.addAttribute("professors", this.professorService.findAll(page,size));
+        return "professors-all";
     }
 
     @GetMapping("/add-new")

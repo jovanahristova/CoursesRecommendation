@@ -1,12 +1,17 @@
 package com.mk.ukim.finki.RecommendationSystem.service;
 
 import com.mk.ukim.finki.RecommendationSystem.model.User;
-import org.springframework.data.domain.Page;
+import com.mk.ukim.finki.RecommendationSystem.web.dto.UserRegistrationDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface UserService {
+
+public interface UserService extends UserDetailsService{
+
+    User findByEmail(String email);
+
+    User save(UserRegistrationDto registration);
 
     List<User> findAll();
 

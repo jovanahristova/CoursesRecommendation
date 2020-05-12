@@ -51,45 +51,47 @@
         <a th:href="@{/logout}" class="w3-bar-item w3-button w3-hide-small w3-hover-white float-right">Logout</a>
     </div>
 </div>
+
 <div class="w3-main" >
 
     <div class="w3-row w3-padding-64" style="margin-left:250px">
         <div class="w3-twothird w3-container">
-            <h1 class="w3-text-teal">List of Assistants assisting on <span th:text="${course.getName()}"></span></h1>
+            <h1 class="w3-text-teal">List of all ratings for professors</h1>
 
             <div class="w3-container">
                 <hr>
                 <div class="w3-left">
-                    <a href="/courses/all" class="w3-button w3-theme">Back to all Courses</a>
+                    <a href="/ratingsUP/add-newUP" class="w3-button w3-theme">Add new Rating for Professor</a>
                     <br>
-
                 </div>
                 <br>
                 <br>
-                <div class="w3-responsive w3-card-4" th:if="${assistants.size() > 0}">
+                <div class="w3-responsive w3-card-4" th:if="${ratingsUP.size() > 0}">
                     <table class="w3-table w3-striped w3-bordered">
                         <thead>
                         <tr class="w3-theme">
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">E-mail</th>
+                            <th scope="col">Professor</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Comment</th>
                             <th></th>
+
 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="assistant : ${assistants}">
-                            <td th:text="${assistant.getFirstName()}"></td>
-                            <td th:text="${assistant.getLastName()}"></td>
-                            <td th:text="${assistant.getTitle()}"></td>
-                            <td th:text="${assistant.getEmail()}"></td>
+                        <tr th:each="rating : ${ratingsUP}">
+                            <td th:text="${rating.getProfessor().getFirstAndLastName()}"></td>
+                            <td th:text="${rating.getRating()}"></td>
+                            <td th:text="${rating.getComment()}"></td>
+
                             <td>
-                                <form th:action="@{/courses/{id}/removeAssistant/{idA}(idA=${assistant.getId()}, id=${course.getId()})}" th:method="POST">
+                                <form th:action="@{/ratingsUP/{id}/remove(id=${rating.getId()})}" th:method="delete">
                                     <button type="submit" class="w3-button-sm w3-theme">Remove</button>
 
                                 </form>
                             </td >
+
+
 
                         </tr>
 
@@ -103,6 +105,7 @@
     </div>
 
 
+
     <footer id="myFooter">
         <div class="w3-container w3-theme-l2" style="width: 100%">
             <h6>Jovana Hristova</h6>
@@ -112,10 +115,8 @@
             <p>Powered by <a href="https://finki.ukim.mk/" target="_blank">FINKI</a></p>
         </div>
     </footer>
-
     <!-- END MAIN -->
 </div>
-
 
 
 

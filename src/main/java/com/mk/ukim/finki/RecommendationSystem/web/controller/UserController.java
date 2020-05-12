@@ -23,62 +23,6 @@ public class UserController {
         this.userService = userService;
     }
 
-   /* @GetMapping
-    public String getCoursePage(Model model){
-        List<Course> courses = this.courseService.findAll();
-        model.addAttribute("courses", courses);
-        return "courses";
-    }
-
-    @GetMapping("/add-new")
-    public String addNewCoursePage(Model model){
-        model.addAttribute("course", new Course());
-        return  "add-course";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String editCoursePage(@PathVariable int id, Model model){
-        try {
-            Course course = this.courseService.findById(id);
-            model.addAttribute("course", course);
-            return "add-course";
-
-        }catch (RuntimeException ex){
-            return "redirect:/courses?error=" + ex.getLocalizedMessage();
-        }
-    }
-
-    @PostMapping
-    public String saveCourse(@Valid Course course,
-                             BindingResult bindingResult,
-                             Model model){
-        if (bindingResult.hasErrors()) {
-            return "add-course";
-        }
-        this.courseService.createCourse(course);
-        return "redirect:/courses";
-    }
-
-    @PostMapping("/{id}/delete")
-    public String deleteCourse(@PathVariable int id){
-        this.courseService.deleteCourseById(id);
-
-        return  "redirect:/courses";
-    }
-    @GetMapping
-    public List<User> findAll() {
-        return userService.findAll();
-    }*/
-
-    @GetMapping
-    public String getStudentsPage(Model model){
-        List<User> users = this.userService.findAll();
-        model.addAttribute("users", users);
-        return "students";
-    }
-
-  
-
 
     @PostMapping
     public User createUser(@RequestParam(value = "firstName") String firstName,

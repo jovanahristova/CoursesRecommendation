@@ -6,11 +6,14 @@ import com.mk.ukim.finki.RecommendationSystem.model.exceptions.ProfessorAlreadyE
 import com.mk.ukim.finki.RecommendationSystem.service.CourseService;
 import com.mk.ukim.finki.RecommendationSystem.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,11 +29,32 @@ public class CourseController {
         this.professorService = professorService;
     }
 
+    @GetMapping("/all")
+    public String coursesPage(HttpServletRequest request, Model model) {
+
+        int page = 0; //default page number is 0 (yes it is weird)
+        int size = 10; //default page size is 10
+
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }
+
+        model.addAttribute("courses", this.courseService.findAll(page, size));
+
+        return "courses-all";
+    }
+
+
     @GetMapping
-    public String getCoursePage(Model model){
+    public String getCoursePage(HttpServletRequest request, Model model){
+
         List<Course> courses = this.courseService.findAll();
         model.addAttribute("courses", courses);
-        return "courses";
+        return "redirect:/courses/all";
     }
 
     @GetMapping("/add-new")
@@ -82,6 +106,16 @@ public class CourseController {
 
     @GetMapping("/{id}/assistantsToCourse")
     public String assistantsToCourse(@PathVariable int id, Model model){
+      /*  int page = 0; //default page number is 0 (yes it is weird)
+        int size = 10; //default page size is 10
+
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }*/
         Course course = this.courseService.findById(id);
         model.addAttribute("course", course);
 
@@ -91,22 +125,6 @@ public class CourseController {
 
         return "assistantsToCourse";
     }
-    /*@PostMapping("/PAtoCourse")
-    public String savePAtoCourse(@Valid Course course,
-                                 BindingResult bindingResult,
-                                 Model model
-                                    ){
-        if (bindingResult.hasErrors()) {
-            List<Professor> professors = this.professorService.findAll();
-            model.addAttribute("professors", professors);
-            List<Professor> assistants = this.professorService.findAll();
-            model.addAttribute("assistants", assistants);
-            return "add-PA-course";
-        }
-        this.courseService.saveProfessorAssistantToCourse(course);
-        return "redirect:/courses";
-
-    }*/
 
     @PostMapping("/PAtoCourse")
     public String savePAtoCourse(@ModelAttribute @Valid @RequestBody Course course, BindingResult bindingResult, @RequestParam Integer professors ,

@@ -1,4 +1,3 @@
-<!--
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
@@ -11,6 +10,28 @@
 <script src="/static/vendor/jquery-migrate/jquery-migrate.min.js"></script>
 <script src="/static/vendor/popper.min.js"></script>
 <script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css"
+      th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap.min.css">
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+<script src="/static/vendor/popper.min.js"></script>
+<script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
@@ -28,7 +49,7 @@
 </style>
 <body>
 
-&lt;!&ndash; Navbar &ndash;&gt;
+<!-- Navbar -->
 <div class="w3-top">
     <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
         <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
@@ -44,22 +65,18 @@
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <a href="/ratingsUP/all" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ratings for Professors</a>
             <a href="/ratingsUC/all" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ratings for Courses</a>
+
+            <a href="/studyprograms" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Study Programs</a>
         </div>
-        <a href="/studyprograms" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Study Programs</a>
         <a href="/#">
             <span sec:authentication="principal.username"></span>
         </a>
         <a th:href="@{/logout}" class="w3-bar-item w3-button w3-hide-small w3-hover-white float-right">Logout</a>
     </div>
 </div>
+<div class="w3-main" >
 
-&lt;!&ndash; Overlay effect when opening sidebar on small screens &ndash;&gt;
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-&lt;!&ndash; Main content: shift it to the right by 250 pixels when the sidebar is visible &ndash;&gt;
-<div class="w3-main" style="margin-left:250px">
-
-    <div class="w3-row w3-padding-64">
+    <div class="w3-row w3-padding-64" style="margin-left:250px">
         <div class="w3-twothird w3-container">
             <h1 class="w3-text-teal">List of all professors</h1>
 
@@ -74,7 +91,7 @@
 
                 <br>
                 <br>
-                <div class="w3-responsive w3-card-4" th:if="${professors.size() > 0}">
+                <div class="w3-responsive w3-card-4" th:if="${professors.getSize() > 0}">
                     <table class="w3-table w3-striped w3-bordered">
                         <thead>
                         <tr class="w3-theme">
@@ -85,8 +102,8 @@
                             <th scope="col">Courses as Professor</th>
                             <th scope="col">Courses as Assistant</th>
                             <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <th></th>
-                            <th></th>
+                                <th></th>
+                                <th></th>
                             </div>
 
                         </tr>
@@ -113,15 +130,15 @@
 
                             </td>
                             <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <td>
-                                <form th:action="@{/professors/{id}/delete(id=${professor.getId()})}" th:method="delete">
-                                    <button type="submit" class="w3-button-sm w3-theme">Delete</button>
+                                <td>
+                                    <form th:action="@{/professors/{id}/delete(id=${professor.getId()})}" th:method="delete">
+                                        <button type="submit" class="w3-button-sm w3-theme">Delete</button>
 
-                                </form>
-                            </td >
-                            <td><a th:href="@{/professors/{id}/edit(id=${professor.getId()})}" class="w3-button-sm w3-theme">
-                                <button type="submit" class="w3-button-sm w3-theme">Edit</button></a>
-                            </td>
+                                    </form>
+                                </td >
+                                <td><a th:href="@{/professors/{id}/edit(id=${professor.getId()})}" class="w3-button-sm w3-theme">
+                                    <button type="submit" class="w3-button-sm w3-theme">Edit</button></a>
+                                </td>
                             </div>
 
                         </tr>
@@ -130,68 +147,54 @@
                     </table>
 
                 </div>
-                <div class="w3-left" style="padding: 30px">
-                    <a type="button" class="w3-button w3-theme" href="/home">Back</a>
-
-                    <br>
+                <div class="text-center" style="padding: 30px">
+                    <nav aria-label="Pagination" th:if="${professors.totalPages gt 0}">
+                        <ul class="pagination justify-content-center font-weight-bold">
+                            <li class="page-item" th:classappend="${professors.number eq 0} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/professors/all?page={id}(id=${professors.number lt 2 ? 1 : professors.number})}"
+                                   aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${i eq professors.number + 1} ? 'active'"
+                                th:each="i : ${#numbers.sequence( 1, professors.totalPages, 1)}">
+                                <a class="page-link" style="color: black" th:href="@{/professors/all?page={id}(id=${i})}" th:text="${i}"
+                                   th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${professors.number + 1 eq professors.totalPages} ? 'disabled'">
+                                <a class="page-link" style="color: black"
+                                   th:href="@{/professors/all?page={id}(id=${professors.number + 2})}"
+                                   aria-label="Next" title="Next Page" data-toggle="tooltip">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
+                <a type="button" class="w3-button w3-theme" href="/home">Back</a>
             </div>
 
         </div>
 
     </div>
 
-    &lt;!&ndash; Pagination &ndash;&gt;
-    <div class="w3-center w3-padding-32">
-        <div class="w3-bar">
-            <a class="w3-button w3-black" href="#">1</a>
-            <a class="w3-button w3-hover-black" href="#">2</a>
-            <a class="w3-button w3-hover-black" href="#">3</a>
-            <a class="w3-button w3-hover-black" href="#">4</a>
-            <a class="w3-button w3-hover-black" href="#">5</a>
-            <a class="w3-button w3-hover-black" href="#">»</a>
-        </div>
-    </div>
 
     <footer id="myFooter">
-        <div class="w3-container w3-theme-l2 w3-padding-32">
-            <h4>Footer</h4>
+        <div class="w3-container w3-theme-l2" style="width: 100%">
+            <h6>Jovana Hristova</h6>
         </div>
 
         <div class="w3-container w3-theme-l1">
-            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+            <p>Powered by <a href="https://finki.ukim.mk/" target="_blank">FINKI</a></p>
         </div>
     </footer>
 
-    &lt;!&ndash; END MAIN &ndash;&gt;
+    <!-- END MAIN -->
 </div>
 
 
-<script>
-    // Get the Sidebar
-    var mySidebar = document.getElementById("mySidebar");
 
-    // Get the DIV with overlay effect
-    var overlayBg = document.getElementById("myOverlay");
-
-    // Toggle between showing and hiding the sidebar, and add overlay effect
-    function w3_open() {
-        if (mySidebar.style.display === 'block') {
-            mySidebar.style.display = 'none';
-            overlayBg.style.display = "none";
-        } else {
-            mySidebar.style.display = 'block';
-            overlayBg.style.display = "block";
-        }
-    }
-
-    // Close the sidebar with the close button
-    function w3_close() {
-        mySidebar.style.display = "none";
-        overlayBg.style.display = "none";
-    }
-</script>
 
 </body>
 </html>
--->

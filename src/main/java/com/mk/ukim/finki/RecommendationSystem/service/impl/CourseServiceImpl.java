@@ -9,6 +9,8 @@ import com.mk.ukim.finki.RecommendationSystem.model.exceptions.ProfessorNotFound
 import com.mk.ukim.finki.RecommendationSystem.repository.CourseRepository;
 import com.mk.ukim.finki.RecommendationSystem.repository.ProfessorRepository;
 import com.mk.ukim.finki.RecommendationSystem.service.CourseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,6 +30,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> findAll() {
         return this.courseRepository.findAll();
+    }
+
+    @Override
+    public Page<Course> findAll(int page, int size) {
+        return this.courseRepository.findAll(PageRequest.of(page, size));
     }
 
     @Override

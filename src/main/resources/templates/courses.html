@@ -1,184 +1,195 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<title>Recomendation System</title>
-<meta charset="UTF-8">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
+<!--<title>Recomendation System</title>-->
+<!--<meta charset="UTF-8">-->
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap.min.css">
-<script src="/static/vendor/jquery/jquery.min.js"></script>
-<script src="/static/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-<script src="/static/vendor/popper.min.js"></script>
-<script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--<link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap.min.css">-->
+<!--<script src="/static/vendor/jquery/jquery.min.js"></script>-->
+<!--<script src="/static/vendor/jquery-migrate/jquery-migrate.min.js"></script>-->
+<!--<script src="/static/vendor/popper.min.js"></script>-->
+<!--<script src="/static/vendor/bootstrap/bootstrap.min.js"></script>-->
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
-    .w3-sidebar {
-        z-index: 3;
-        width: 250px;
-        top: 43px;
-        bottom: 0;
-        height: inherit;
-    }
-</style>
-<body>
+<!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
+<!--<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">-->
+<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<!--<style>-->
+<!--    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}-->
+<!--    .w3-sidebar {-->
+<!--        z-index: 3;-->
+<!--        width: 250px;-->
+<!--        top: 43px;-->
+<!--        bottom: 0;-->
+<!--        height: inherit;-->
+<!--    }-->
+<!--</style>-->
+<!--<body>-->
 
-<!-- Navbar -->
-<div class="w3-top">
-    <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
-        <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-        <a href="/home" class="w3-bar-item w3-button w3-theme-l1">FINKI</a>
-        <a href="/professors" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Professors</a>
-        <a href="/courses" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Courses</a>
-        <a href="/students" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Students</a>
-        <a href="/studyprograms" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Study Programs</a>
-    </div>
-</div>
+<!--<div class="w3-top">-->
+<!--    <div class="w3-bar w3-theme w3-top w3-left-align w3-large">-->
+<!--        <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>-->
+<!--        <a href="/home" class="w3-bar-item w3-button w3-theme-l1">FINKI</a>-->
+<!--        <a href="/professors" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Professors</a>-->
+<!--        <a href="/courses" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Courses</a>-->
 
-<!-- Sidebar -->
-<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
-        <i class="fa fa-remove"></i>
-    </a>
-    <h4 class="w3-bar-item"><b>Menu</b></h4>
-    <a class="w3-bar-item w3-button w3-hover-black" href="/professors">Professors</a>
-    <a class="w3-bar-item w3-button w3-hover-black" href="/courses">Courses</a>
-    <a class="w3-bar-item w3-button w3-hover-black" href="/students">Students</a>
-    <a class="w3-bar-item w3-button w3-hover-black" href="/studyprograms">Study Programs</a>
-</nav>
+<!--        <div sec:authorize="hasRole('ROLE_STUDENT')">-->
+<!--            <a href="/ratingsUP" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Professor Ratings</a>-->
+<!--            <a href="/ratingsUC" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Course Ratings</a>-->
+<!--        </div>-->
 
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<!--        <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--            <a href="/ratingsUP/all" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ratings for Professors</a>-->
+<!--            <a href="/ratingsUC/all" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Ratings for Courses</a>-->
+<!--        </div>-->
+<!--        <a href="/studyprograms" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Study Programs</a>-->
+<!--        <a href="/#">-->
+<!--            <span sec:authentication="principal.username"></span>-->
+<!--        </a>-->
+<!--        <a th:href="@{/logout}" class="w3-bar-item w3-button w3-hide-small w3-hover-white float-right">Logout</a>-->
+<!--    </div>-->
+<!--</div>-->
 
-<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
-<div class="w3-main" style="margin-left:250px">
+<!--&lt;!&ndash; Overlay effect when opening sidebar on small screens &ndash;&gt;-->
+<!--<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>-->
 
-    <div class="w3-row w3-padding-64">
-        <div class="w3-twothird w3-container">
-            <h1 class="w3-text-teal">List of all courses</h1>
+<!--&lt;!&ndash; Main content: shift it to the right by 250 pixels when the sidebar is visible &ndash;&gt;-->
+<!--<div class="w3-main" style="margin-left:250px">-->
 
-            <div class="w3-container">
-                <hr>
-                <div class="w3-left">
-                    <a href="/courses/add-new" class="w3-button w3-theme">Add new Course</a>
-                    <br>
-                </div>
-                <br>
-                <br>
-                <div class="w3-responsive w3-card-4" th:if="${courses.size() > 0}">
-                    <table class="w3-table w3-striped w3-bordered">
-                        <thead>
-                        <tr class="w3-theme">
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Term</th>
-                            <th scope="col">Professors</th>
-                            <th scope="col">Assistants</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+<!--    <div class="w3-row w3-padding-64">-->
+<!--        <div class="w3-twothird w3-container">-->
+<!--            <h1 class="w3-text-teal">List of all courses</h1>-->
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="course : ${courses}">
-                            <td th:text="${course.getName()}"></td>
-                            <td th:text="${course.getDescription()}"></td>
-                            <td th:text="${course.getTerm()}"></td>
-                            <td>
-                                <div>
-                                    <a th:href="@{/courses/{id}/professorsToCourse(id=${course.getId()})}">See all</a>
-                                    (<span th:text="${course.getProfessors().size()}"></span>)
+<!--            <div class="w3-container">-->
+<!--                <hr>-->
+<!--                <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                <div class="w3-left">-->
+<!--                    <a href="/courses/add-new" class="w3-button w3-theme">Add new Course</a>-->
+<!--                    <br>-->
+<!--                </div>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                </div>-->
+<!--                <div class="w3-responsive w3-card-4" th:if="${courses.size() > 0}">-->
+<!--                    <table class="w3-table w3-striped w3-bordered">-->
+<!--                        <thead>-->
+<!--                        <tr class="w3-theme">-->
+<!--                            <th scope="col">Name</th>-->
+<!--                            <th scope="col">Description</th>-->
+<!--                            <th scope="col">Term</th>-->
+<!--                            <th scope="col">Professors</th>-->
+<!--                            <th scope="col">Assistants</th>-->
+<!--                            <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                            <th></th>-->
+<!--                            <th></th>-->
+<!--                            <th></th>-->
+<!--                            </div>-->
 
-                                </div>
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="course : ${courses}">-->
+<!--                            <td th:text="${course.getName()}"></td>-->
+<!--                            <td th:text="${course.getDescription()}"></td>-->
+<!--                            <td th:text="${course.getTerm()}"></td>-->
+<!--                            <td>-->
+<!--                                <div>-->
+<!--                                    <a th:href="@{/courses/{id}/professorsToCourse(id=${course.getId()})}">See all</a>-->
+<!--                                    (<span th:text="${course.getProfessors().size()}"></span>)-->
 
-                            </td>
-                            <td>
-                                <div>
-                                    <a th:href="@{/courses/{id}/assistantsToCourse(id=${course.getId()})}">See all</a>
-                                    (<span th:text="${course.getAssistants().size()}"></span>)
-                                </div>
+<!--                                </div>-->
 
-                            </td>
-                            <td>
-                                <a th:href="@{/courses/{id}/PAtoCourse(id=${course.getId()})}" class="w3-button-sm w3-theme">
-                                    <button type="submit" class="w3-button-sm w3-theme">ADD P/A</button></a>
-                            </td>
-                            <td>
-                                <form th:action="@{/courses/{id}/delete(id=${course.getId()})}" th:method="delete">
-                                    <button type="submit" class="w3-button-sm w3-theme">Delete</button>
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <div>-->
+<!--                                    <a th:href="@{/courses/{id}/assistantsToCourse(id=${course.getId()})}">See all</a>-->
+<!--                                    (<span th:text="${course.getAssistants().size()}"></span>)-->
+<!--                                </div>-->
 
-                                </form>
-                            </td >
-                            <td><a th:href="@{/courses/{id}/edit(id=${course.getId()})}" class="w3-button-sm w3-theme">
-                                <button type="submit" class="w3-button-sm w3-theme">Edit</button></a>
-                            </td>
+<!--                            </td>-->
+<!--                            <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                            <td>-->
+<!--                                <a th:href="@{/courses/{id}/PAtoCourse(id=${course.getId()})}" class="w3-button-sm w3-theme">-->
+<!--                                    <button type="submit" class="w3-button-sm w3-theme">ADD P/A</button></a>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <form th:action="@{/courses/{id}/delete(id=${course.getId()})}" th:method="delete">-->
+<!--                                    <button type="submit" class="w3-button-sm w3-theme">Delete</button>-->
+
+<!--                                </form>-->
+<!--                            </td >-->
+<!--                            <td><a th:href="@{/courses/{id}/edit(id=${course.getId()})}" class="w3-button-sm w3-theme">-->
+<!--                                <button type="submit" class="w3-button-sm w3-theme">Edit</button></a>-->
+<!--                            </td>-->
+<!--                            </div>-->
+
+<!--                        </tr>-->
+
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--                <div class="w3-left" style="padding: 30px">-->
+<!--                    <a type="button" class="w3-button w3-theme" href="/home">Back</a>-->
+
+<!--                    <br>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--    </div>-->
+
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Pagination &ndash;&gt;-->
+<!--    <div class="w3-center w3-padding-32">-->
+<!--        <div class="w3-bar">-->
+<!--            <a class="w3-button w3-black" href="#">1</a>-->
+<!--            <a class="w3-button w3-hover-black" href="#">2</a>-->
+<!--            <a class="w3-button w3-hover-black" href="#">3</a>-->
+<!--            <a class="w3-button w3-hover-black" href="#">4</a>-->
+<!--            <a class="w3-button w3-hover-black" href="#">5</a>-->
+<!--            <a class="w3-button w3-hover-black" href="#">»</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <footer id="myFooter">-->
+<!--        <div class="w3-container w3-theme-l2 w3-padding-32">-->
+<!--            <h4>Footer</h4>-->
+<!--        </div>-->
+
+<!--        <div class="w3-container w3-theme-l1">-->
+<!--            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>-->
+<!--        </div>-->
+<!--    </footer>-->
+
+<!--    &lt;!&ndash; END MAIN &ndash;&gt;-->
+<!--</div>-->
 
 
-                        </tr>
+<!--<script>-->
+<!--    // Get the Sidebar-->
+<!--    var mySidebar = document.getElementById("mySidebar");-->
 
-                        </tbody>
-                    </table>
-                </div>
-              </div>
+<!--    // Get the DIV with overlay effect-->
+<!--    var overlayBg = document.getElementById("myOverlay");-->
 
-    </div>
+<!--    // Toggle between showing and hiding the sidebar, and add overlay effect-->
+<!--    function w3_open() {-->
+<!--        if (mySidebar.style.display === 'block') {-->
+<!--            mySidebar.style.display = 'none';-->
+<!--            overlayBg.style.display = "none";-->
+<!--        } else {-->
+<!--            mySidebar.style.display = 'block';-->
+<!--            overlayBg.style.display = "block";-->
+<!--        }-->
+<!--    }-->
 
-    </div>
+<!--    // Close the sidebar with the close button-->
+<!--    function w3_close() {-->
+<!--        mySidebar.style.display = "none";-->
+<!--        overlayBg.style.display = "none";-->
+<!--    }-->
+<!--</script>-->
 
-    <!-- Pagination -->
-    <div class="w3-center w3-padding-32">
-        <div class="w3-bar">
-            <a class="w3-button w3-black" href="#">1</a>
-            <a class="w3-button w3-hover-black" href="#">2</a>
-            <a class="w3-button w3-hover-black" href="#">3</a>
-            <a class="w3-button w3-hover-black" href="#">4</a>
-            <a class="w3-button w3-hover-black" href="#">5</a>
-            <a class="w3-button w3-hover-black" href="#">»</a>
-        </div>
-    </div>
-
-    <footer id="myFooter">
-        <div class="w3-container w3-theme-l2 w3-padding-32">
-            <h4>Footer</h4>
-        </div>
-
-        <div class="w3-container w3-theme-l1">
-            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-        </div>
-    </footer>
-
-    <!-- END MAIN -->
-</div>
-
-
-<script>
-    // Get the Sidebar
-    var mySidebar = document.getElementById("mySidebar");
-
-    // Get the DIV with overlay effect
-    var overlayBg = document.getElementById("myOverlay");
-
-    // Toggle between showing and hiding the sidebar, and add overlay effect
-    function w3_open() {
-        if (mySidebar.style.display === 'block') {
-            mySidebar.style.display = 'none';
-            overlayBg.style.display = "none";
-        } else {
-            mySidebar.style.display = 'block';
-            overlayBg.style.display = "block";
-        }
-    }
-
-    // Close the sidebar with the close button
-    function w3_close() {
-        mySidebar.style.display = "none";
-        overlayBg.style.display = "none";
-    }
-</script>
-
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

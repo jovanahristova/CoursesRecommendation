@@ -1,5 +1,6 @@
 package com.mk.ukim.finki.RecommendationSystem.service;
 
+import com.mk.ukim.finki.RecommendationSystem.model.Course;
 import com.mk.ukim.finki.RecommendationSystem.model.Professor;
 import org.springframework.data.domain.Page;
 
@@ -9,7 +10,9 @@ import java.util.Optional;
 public interface ProfessorService {
     List<Professor> findAll();
 
-    //Page<Professor> findAll(int page, int size);
+    Page<Professor> findAll(int page, int size);
+
+    //List<Professor> findAllByCoursesByProffesor(Course course);
 
     Professor findById(int id);
 

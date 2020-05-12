@@ -1,9 +1,12 @@
 package com.mk.ukim.finki.RecommendationSystem.service.impl;
 
+import com.mk.ukim.finki.RecommendationSystem.model.Course;
 import com.mk.ukim.finki.RecommendationSystem.model.Professor;
 import com.mk.ukim.finki.RecommendationSystem.model.exceptions.ProfessorNotFoundException;
 import com.mk.ukim.finki.RecommendationSystem.repository.ProfessorRepository;
 import com.mk.ukim.finki.RecommendationSystem.service.ProfessorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,16 @@ public class ProfessorServiceImpl implements ProfessorService {
     public List<Professor> findAll() {
         return this.professorRepository.findAll();
     }
+
+    @Override
+    public Page<Professor> findAll(int page, int size) {
+        return this.professorRepository.findAll(PageRequest.of(page, size));
+    }
+
+    /*@Override
+    public List<Professor> findAllByCoursesByProffesor(Course course) {
+        return this.professorRepository.findAllByCoursesByProffesor(course);
+    }*/
 
     @Override
     public Professor findById(int id) {

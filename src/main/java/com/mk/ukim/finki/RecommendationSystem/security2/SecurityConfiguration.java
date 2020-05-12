@@ -1,5 +1,6 @@
 package com.mk.ukim.finki.RecommendationSystem.security2;
 
+import com.mk.ukim.finki.RecommendationSystem.model.User;
 import com.mk.ukim.finki.RecommendationSystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,27 +18,34 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserPrincipalDetailsService userService;
+    @Autowired
+    private UserService userService;
 
-    public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
-        this.userService = userPrincipalDetailsService;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+
+                .antMatchers("/ratingsUC").hasRole("STUDENT")
+                .antMatchers("/ratingsUC/add-newUC").hasRole("STUDENT")
+                .antMatchers("/ratingsUP").hasRole("STUDENT")
+                .antMatchers("/ratingsUP/add-newUP").hasRole("STUDENT")
+                .antMatchers("/ratingsUC/all").hasRole("ADMIN")
+                .antMatchers("/ratingsUP/all").hasRole("ADMIN")
                 .antMatchers(
                         "/registration**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
-                        "/webjars/**").permitAll()
+                        "/webjars/**",
+                        "/").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                    .loginPage("/login")
+                        .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
@@ -65,63 +73,3 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 }
-
-/*{
-   /* private UserPrincipalDetailsService userPrincipalDetailsService;
-
-    public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
-        this.userPrincipalDetailsService = userPrincipalDetailsService;
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider());
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/home").permitAll()
-                //.antMatchers("/profile/**").authenticated()
-              *//*  .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/management/**").hasAnyRole("ADMIN", "MANAGER")
-                .antMatchers("/api/public/test1").hasAuthority("ACCESS_TEST1")
-                .antMatchers("/api/public/test2").hasAuthority("ACCESS_TEST2")
-                .antMatchers("/").hasAnyRole()
-                .antMatchers("/api/public/users").hasRole("ADMIN")*//*
-                .antMatchers("/register").permitAll()
-              .antMatchers("/register/**").permitAll()
-                .antMatchers("/register/processRegistrationForm").permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/showMyLoginPage")
-                .loginProcessingUrl("/authenticateTheUser")
-                .permitAll()
-//                .formLogin()
-//                .loginProcessingUrl("/login/showMyLoginPage")
-//                .loginPage("/login/showMyLoginPage").permitAll()
-                .usernameParameter("txtUsername")
-                .passwordParameter("txtPassword")
-                .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-                .and()
-                .rememberMe().tokenValiditySeconds(2592000).key("mySecret!").rememberMeParameter("checkRememberMe");
-    }
-
-    @Bean
-    DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
-
-        return daoAuthenticationProvider;
-    }
-
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-}
-*/

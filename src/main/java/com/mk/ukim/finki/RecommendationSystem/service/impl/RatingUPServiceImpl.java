@@ -1,10 +1,13 @@
 package com.mk.ukim.finki.RecommendationSystem.service.impl;
 
+import com.mk.ukim.finki.RecommendationSystem.model.User;
 import com.mk.ukim.finki.RecommendationSystem.model.exceptions.RatingNotFoundException;
 import com.mk.ukim.finki.RecommendationSystem.repository.RatingUPRepository;
 import com.mk.ukim.finki.RecommendationSystem.model.RatingUP;
 import com.mk.ukim.finki.RecommendationSystem.service.RatingUPService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,16 @@ public class RatingUPServiceImpl implements RatingUPService {
     @Override
     public List<RatingUP> findAll() {
         return this.ratingUPRepository.findAll();
+    }
+
+    @Override
+    public Page<RatingUP> findAll(int page, int size) {
+        return this.ratingUPRepository.findAll(PageRequest.of(page, size));
+    }
+
+    @Override
+    public List<RatingUP> findByUser(User user) {
+        return this.ratingUPRepository.findByUser(user);
     }
 
     @Override

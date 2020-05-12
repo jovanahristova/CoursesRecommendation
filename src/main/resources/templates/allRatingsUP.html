@@ -3,11 +3,13 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <title>Recomendation System</title>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap.min.css">
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+<script src="/static/vendor/popper.min.js"></script>
+<script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css"
       th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -26,12 +28,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/static/vendor/bootstrap/bootstrap.min.css">
-<script src="/static/vendor/jquery/jquery.min.js"></script>
-<script src="/static/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-<script src="/static/vendor/popper.min.js"></script>
-<script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
@@ -73,85 +73,63 @@
         <a th:href="@{/logout}" class="w3-bar-item w3-button w3-hide-small w3-hover-white float-right">Logout</a>
     </div>
 </div>
+
 <div class="w3-main" >
 
     <div class="w3-row w3-padding-64" style="margin-left:250px">
         <div class="w3-twothird w3-container">
-            <h1 class="w3-text-teal">List of all courses for <span th:text="${assistant.getFirstAndLastName()}"></span> as Assistant</h1>
+            <h1 class="w3-text-teal">List of all ratings for all professors</h1>
 
             <div class="w3-container">
                 <hr>
-                <div class="w3-left">
-                    <a href="/professors" class="w3-button w3-theme">Back to all Professors</a>
-                    <br>
 
-                </div>
                 <br>
                 <br>
-                <div class="w3-responsive w3-card-4" th:if="${courses.size() > 0}">
+                <div class="w3-responsive w3-card-4" th:if="${ratingsUP.getSize() > 0}">
                     <table class="w3-table w3-striped w3-bordered">
                         <thead>
                         <tr class="w3-theme">
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Term</th>
-                            <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <th></th>
-                            </div>
-
-
+                            <th scope="col">Professor</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Comment</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="course : ${courses}">
-                            <td th:text="${course.getName()}"></td>
-                            <td th:text="${course.getDescription()}"></td>
-                            <td th:text="${course.getTerm()}"></td>
-
-                            <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <td>
-
-                                    <form th:action="@{/professors/{id}/deleteCourseA/{idC}(idC=${course.getId()}, id=${assistant.getId()})}" th:method="POST">
-                                        <button type="submit" class="w3-button-sm w3-theme">Remove</button>
-
-                                    </form>
-
-
-                            </td >
-                            </div>
-
-
-
+                        <tr th:each="rating : ${ratingsUP}">
+                            <td th:text="${rating.getProfessor().getFirstAndLastName()}"></td>
+                            <td th:text="${rating.getRating()}"></td>
+                            <td th:text="${rating.getComment()}"></td>
                         </tr>
 
                         </tbody>
                     </table>
                 </div>
-            <!--    <div class="text-center" style="padding: 30px">
-                    <nav aria-label="Pagination" th:if="${courses.totalPages gt 0}">
+                <div class="text-center" style="padding: 30px">
+                    <nav aria-label="Pagination" th:if="${ratingsUP.totalPages gt 0}">
                         <ul class="pagination justify-content-center font-weight-bold">
-                            <li class="page-item" th:classappend="${courses.number eq 0} ? 'disabled'">
+                            <li class="page-item" th:classappend="${ratingsUP.number eq 0} ? 'disabled'">
                                 <a class="page-link"
-                                   th:href="@{/courses/all?page={id}(id=${courses.number lt 2 ? 1 : courses.number})}"
+                                   th:href="@{/ratingsUP/all?page={id}(id=${ratingsUP.number lt 2 ? 1 : ratingsUP.number})}"
                                    aria-label="Previous" title="Previous Page" data-toggle="tooltip">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item" th:classappend="${i eq courses.number + 1} ? 'active'"
-                                th:each="i : ${#numbers.sequence( 1, courses.totalPages, 1)}">
-                                <a class="page-link" style="color: black" th:href="@{/courses/all?page={id}(id=${i})}" th:text="${i}"
+                            <li class="page-item" th:classappend="${i eq ratingsUP.number + 1} ? 'active'"
+                                th:each="i : ${#numbers.sequence( 1, ratingsUP.totalPages, 1)}">
+                                <a class="page-link" style="color: black" th:href="@{/ratingsUP/all?page={id}(id=${i})}" th:text="${i}"
                                    th:title="${'Page '+ i}" data-toggle="tooltip"></a>
                             </li>
-                            <li class="page-item" th:classappend="${courses.number + 1 eq courses.totalPages} ? 'disabled'">
+                            <li class="page-item" th:classappend="${ratingsUP.number + 1 eq ratingsUP.totalPages} ? 'disabled'">
                                 <a class="page-link" style="color: black"
-                                   th:href="@{/courses/all?page={id}(id=${courses.number + 2})}"
+                                   th:href="@{/ratingsUP/all?page={id}(id=${ratingsUP.number + 2})}"
                                    aria-label="Next" title="Next Page" data-toggle="tooltip">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                         </ul>
                     </nav>
-                </div>-->
+                </div>
+                <a type="button" class="w3-button w3-theme" href="/home">Back</a>
             </div>
 
         </div>
@@ -172,6 +150,7 @@
 
     <!-- END MAIN -->
 </div>
+
 
 
 

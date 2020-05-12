@@ -12,7 +12,7 @@ public interface CourseService {
 
     List<Course> findAll();
 
-    //Page<Course> findAll(int page, int size);
+    Page<Course> findAll(int page, int size);
 
     Course findById(int id);
 

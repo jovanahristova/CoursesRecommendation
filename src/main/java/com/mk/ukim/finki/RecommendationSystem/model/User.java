@@ -1,12 +1,9 @@
 package com.mk.ukim.finki.RecommendationSystem.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -130,5 +127,9 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Collection<Role> getRoles() {
+        return Collections.singletonList(role);
     }
 }
