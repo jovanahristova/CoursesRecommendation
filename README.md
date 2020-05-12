@@ -31,7 +31,8 @@
 `[student1: rejtingOdStudent1, student2:rejtingOdStudent2, …., studentN: rejtingOdStudentN]`
 Овој мод се употребува доколку студентот има дадено рејтинг на повеќе од 5 предмети.
 
-На [линкот](https://drive.google.com/open?id=1QsPzTW_SToIGtkJgsnn7AEdmxdb5Im2M) се податоци за соодветни табели врз основа на коишто ја тестирав апликацијата и точноста на системот за препорака.
+На [линкот](https://drive.google.com/open?id=1QsPzTW_SToIGtkJgsnn7AEdmxdb5Im2M) се податоци за соодветни табели врз основа на коишто ја тестирав апликацијата и точноста на системот за препорака. За највување како Админ, jovana@yahoo.com со лозинка jovana, а за највување како студент student@yahoo.com со лозинка student. 
+
 
 #### Упатство за стартување
 
